@@ -247,7 +247,6 @@ class GoogLeNet(nn.Module):
 
 ## 📊 Results
 
-## So sánh kết quả MLP và CNN
 ## Comparison of MLP and CNN Results
 
 | Criterion               | MLP                              | CNN (GoogLeNet)                  |
@@ -283,6 +282,7 @@ plt.show()
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/CNN%20RESULTS/Matrix%20Confusion%20-%20CNN.png?raw=true" alt="CNN-Confusion Matrix" width="300"/>
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/MLP%20RESULTS/Confusion%20Matrix%20-%20MLP.png?raw=true" alt="MLP-Confusion Matrix" width="300"/>
 </div>
+
 ## ⚙️ Usage
 
 **Clone the Repository**:
