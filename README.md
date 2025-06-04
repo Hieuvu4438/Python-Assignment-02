@@ -1,160 +1,191 @@
 # 🧠 CIFAR-10 Image Classification with CNN (GoogLeNet) and MLP
 
-Welcome to this project where we explore two different deep learning approaches for classifying images from the CIFAR-10 dataset:
-
-- 🔍 **GoogLeNet CNN**: A convolutional neural network inspired by the Inception architecture.
-- 🧱 **MLP (Multi-Layer Perceptron)**: A fully connected feed-forward neural network for image classification.
-
----
-
 ## 📖 Table of Contents
-
-- 🎯 [Project Overview](#-project-overview)
-- 📂 [Dataset](#-dataset)
-- 🛠️ [Requirements](#️-requirements)
-- 🏗️ [Model Architectures](#-model-architectures)
+- 🎯 Project Overview
+- 📂 Dataset
+- 🛠️ Requirements
+- 🏗️ Model Architectures
   - MLP Architecture
   - CNN (GoogLeNet) Architecture
-- 🚀 [Implementation Details](#-implementation-details)
+- 🚀 Implementation Details
   - Data Preprocessing
   - Training Process
   - Evaluation Metrics
-- 📊 [Results](#-results)
-- 📈 [Visualizations](#-visualizations)
-- ⚙️ [Usage](#-usage)
-- 📝 [Notes](#-notes)
-- 🤝 [Contributing](#-contributing)
-- 📜 [License](#-license)
-
----
+- 📊 Results
+- 📈 Visualizations
+- ⚙️ Usage
+- 📝 Notes
+- 🤝 Contributing
+- 📜 License
 
 ## 🎯 Project Overview
+The CIFAR-10 dataset is used to train and evaluate two models: an MLP and a CNN (GoogLeNet). The dataset consists of 60,000 32x32 color images across 10 classes. The MLP is a fully connected neural network with multiple hidden layers, while the CNN leverages the GoogLeNet architecture with Inception modules for efficient feature extraction.
 
-This repository demonstrates two models for image classification using the CIFAR-10 dataset:
-- A custom GoogLeNet-style Convolutional Neural Network (CNN)
-- A fully connected Multi-Layer Perceptron (MLP)
-
-The goal is to compare their effectiveness, training procedures, and evaluation outcomes.
-
----
+**Objective**: Compare the performance of MLP and CNN in terms of accuracy, loss, and computational efficiency for image classification on CIFAR-10.
 
 ## 📂 Dataset
+The CIFAR-10 dataset includes:
 
-📦 **CIFAR-10**: A dataset of 60,000 32x32 RGB images divided into 10 classes, with 50,000 training and 10,000 testing samples.
+- **Training Set**: 50,000 images  
+- **Test Set**: 10,000 images  
+- **Classes**: 10 (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck)  
+- **Image Size**: 32x32 pixels (RGB)  
 
-```
-['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-```
-
----
+The dataset is automatically downloaded using `torchvision.datasets.CIFAR10`.
 
 ## 🛠️ Requirements
 
+To run the notebooks, install the following dependencies:
+
 ```bash
-pip install torch torchvision matplotlib seaborn scikit-learn
+pip install torch torchvision numpy matplotlib seaborn scikit-learn torchsummary
 ```
 
-You also need Python 3.7+ and Jupyter Notebook.
-
----
+**Hardware**:
+- GPU (CUDA-enabled) recommended for faster training.
+- CPU fallback supported.
 
 ## 🏗️ Model Architectures
 
-### 🧱 MLP Architecture
+### MLP Architecture
 
-- Input layer: 32 × 32 × 3 flattened
-- Hidden layers: 5 fully connected layers with `LeakyReLU` and `Dropout`
-- Output: 10-class classification
-- Optimizer: `Adam`, Scheduler: `ReduceLROnPlateau`
-- Loss: `CrossEntropyLoss`
+Implemented in `MLP.ipynb` with the following structure:
 
-### 🔍 CNN (GoogLeNet) Architecture
+- **Input Layer**: Flattens 32x32x3 images (3,072 features).
+- **Hidden Layers**: 5 fully connected layers (512 units each) with:
+  - `LeakyReLU` activation (negative slope: 0.1)
+  - `Dropout(0.3)` for regularization
+- **Output Layer**: 10 units (one per class)
+- **Weight Initialization**: Kaiming uniform for linear layers
+- **Total Parameters**: ~1.8M
 
-- Inception blocks combining 1×1, 3×3, 5×5 convolutions + pooling
-- Pre-layer: Conv2D + BatchNorm + ReLU
-- Deep stacking of inception modules
-- Final classifier: Average Pooling + Fully connected layer
-- Optimizer: `Adam`
-- Loss: `CrossEntropyLoss`
+### CNN (GoogLeNet) Architecture
 
----
+Implemented in `CNN.ipynb` using a simplified GoogLeNet architecture with Inception modules:
+
+- **Pre-layers**: 3x3 convolution (192 filters) with BatchNorm and ReLU
+- **Inception Modules**: Multiple branches with:
+  - 1x1 convolutions
+  - 1x1 + 3x3 convolutions
+  - 1x1 + 5x5 convolutions
+  - 3x3 max pooling + 1x1 convolution
+- **Pooling**: MaxPooling and AveragePooling
+- **Output Layer**: Fully connected layer with 10 units
+- **Total Parameters**: ~6.2M (as shown in `torchsummary`)
 
 ## 🚀 Implementation Details
 
-### 🧹 Data Preprocessing
+### Data Preprocessing
 
-- **Train**: Random crop + Horizontal flip + Normalize
-- **Test**: Normalize only
+**MLP**:
+- Training: Random cropping, horizontal flipping, normalization  
+- Testing: Normalization only  
+- Batch Size: 128
 
-### 🏋️ Training Process
+**CNN**:
+- Training/Testing: Normalization only  
+- Batch Size: 256  
+- Data Loading: DataLoader with 2-4 workers for parallel processing
 
-- Mini-batch training with `batch_size=128` (MLP) and `256` (CNN)
-- Validation accuracy tracked for early stopping
-- Learning rate adjusted via scheduler
-- Checkpoints saved for best models
+### Training Process
 
-### 📏 Evaluation Metrics
+**MLP**:
+- Optimizer: Adam (lr=0.001, weight decay=1e-4)
+- Loss Function: CrossEntropyLoss
+- Scheduler: ReduceLROnPlateau (factor=0.1, patience=10)
+- Epochs: Up to 100 with early stopping (patience=20)
+- Checkpointing: Saves best model based on test accuracy
 
-- Accuracy
-- Loss
-- Confusion Matrix
+**CNN**:
+- Optimizer: Adam (details not fully specified in code)
+- Loss Function: CrossEntropyLoss
+- Epochs: Not explicitly defined in the provided code snippet
 
----
+### Evaluation Metrics
+
+**Metrics**:
+- Training/Test Loss
+- Training/Test Accuracy
+- Confusion Matrix for class-wise performance
+
+**Evaluation**:
+- MLP: Evaluates after each epoch and reports final test accuracy/loss
+- CNN: Similar evaluation with confusion matrix visualization
 
 ## 📊 Results
 
-| Model     | Final Accuracy | Notes                          |
-|-----------|----------------|--------------------------------|
-| GoogLeNet | ~90-92%        | Better performance, more depth |
-| MLP       | ~55-60%        | Simpler architecture           |
+**MLP**:
+- Initial Test Accuracy: ~10% (random guessing)
+- Final Test Accuracy: Varies (typically 50-60%)
+- Training Time: Faster due to simpler architecture
 
----
+**CNN (GoogLeNet)**:
+- Expected Test Accuracy: 90-92%
+- Training Time: Longer due to complex Inception modules
+
+**Comparison**:
+- CNN outperforms MLP significantly due to its ability to capture spatial hierarchies.
+- MLP is computationally lighter but less effective for image tasks.
 
 ## 📈 Visualizations
 
-- 📉 Training & validation loss and accuracy curves
-- 📊 Confusion matrix for classification performance
+Both notebooks include visualizations to analyze model performance:
 
----
+- **Loss Curves**:
+```python
+plt.plot(train_losses, label='Train Loss')
+plt.plot(test_losses, label='Test Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+```
+
+- **Accuracy Curves**
+
+- **Confusion Matrix**: Heatmap showing class-wise predictions vs. true labels
 
 ## ⚙️ Usage
 
-1. Clone the repo:
+**Clone the Repository**:
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/your-username/cifar10-classification.git
+cd cifar10-classification
 ```
 
-2. Run in Jupyter Notebook:
+**Install Dependencies**:
 ```bash
-jupyter notebook
+pip install -r requirements.txt
 ```
 
-3. Open and run:
-- `CNN.ipynb` for GoogLeNet model
-- `MLP.ipynb` for MLP model
+**Run Notebooks**:
+- Open `MLP.ipynb` or `CNN.ipynb` in Jupyter Notebook or Colab.
+- Execute cells sequentially to download data, train models, and visualize results.
 
----
+**Modify Parameters**:
+Adjust hyperparameters (e.g., learning rate, batch size, epochs) or try other architectures/augmentations.
 
 ## 📝 Notes
 
-- GoogLeNet is more powerful but slower to train.
-- MLP is faster but less accurate due to lack of spatial feature learning.
-- Code is cleanly modular and can be extended to other datasets (e.g., Fashion-MNIST).
-
----
+- **MLP Limitations**: Struggles with spatial data due to flattening, leading to lower accuracy.
+- **CNN Advantages**: GoogLeNet's Inception modules efficiently capture multi-scale features.
+- **Hardware**: Use a GPU for faster training, especially for CNN.
+- **Incomplete CNN Code**: CNN.ipynb lacks the full training loop and results; ensure completion for practical use.
+- **Reproducibility**: Set random seeds (`torch.manual_seed(1)`) for consistent results.
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome!  
-Feel free to submit a pull request or create an issue to improve this project.
+Contributions are welcome!
 
----
+1. Fork the repository  
+2. Create a new branch  
+3. Make your changes  
+4. Open a Pull Request  
+
+Please follow [PEP8](https://peps.python.org/pep-0008/) and document your code.
 
 ## 📜 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
----
-
-⭐ **Star this repository** if you find it useful and educational!
+🌟 Happy Coding! If you find this repository useful, give it a star! 🌟
