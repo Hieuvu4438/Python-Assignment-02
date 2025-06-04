@@ -276,7 +276,9 @@ plt.show()
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/CNN%20RESULTS/Loss%20-%20Accuracy%20-%20CNN.png" alt="CNN-Loss-Accuracy" width="300"/>
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/MLP%20RESULTS/Loss%20-%20Accuracy%20-%20MLP.png" alt="MLP-Loss-Accuracy" width="300"/>
 </div>
+
 - **Confusion Matrix**: Heatmap showing class-wise predictions vs. true labels
+
 <div style="display: flex; justify-content: center;">
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/CNN%20RESULTS/Matrix%20Confusion%20-%20CNN.png?raw=true" alt="CNN-Confusion Matrix" width="300"/>
   <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/MLP%20RESULTS/Confusion%20Matrix%20-%20MLP.png?raw=true" alt="MLP-Confusion Matrix" width="300"/>
