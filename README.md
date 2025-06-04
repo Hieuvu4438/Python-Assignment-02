@@ -114,19 +114,15 @@ Implemented in `CNN.ipynb` using a simplified GoogLeNet architecture with Incept
 
 ## 📊 Results
 
-**MLP**:
-- Initial Test Accuracy: ~10% (random guessing)
-- Final Test Accuracy: Varies (typically 50-60%)
-- Training Time: Faster due to simpler architecture
+## So sánh kết quả MLP và CNN
 
-**CNN (GoogLeNet)**:
-- Expected Test Accuracy: 90-92%
-- Training Time: Longer due to complex Inception modules
-
-**Comparison**:
-- CNN outperforms MLP significantly due to its ability to capture spatial hierarchies.
-- MLP is computationally lighter but less effective for image tasks.
-
+| Tiêu chí                | MLP                              | CNN (GoogLeNet)                  |
+|-------------------------|----------------------------------|----------------------------------|
+| **Độ chính xác ban đầu**| ~10% (ngẫu nhiên)               | ~66.7% (ngẫu nhiên)               |
+| **Độ chính xác cuối**   | 55-60%                          | 90-92%                          |
+| **Thời gian huấn luyện**| Nhanh hơn (kiến trúc đơn giản)  | Chậm hơn (Inception phức tạp)   |
+| **Hiệu quả**            | Kém với dữ liệu không gian      | Tốt, bắt đặc trưng không gian   |
+| **Số tham số**          | ~1.8M                           | ~6.2M                           |
 ## 📈 Visualizations
 
 Both notebooks include visualizations to analyze model performance:
@@ -142,9 +138,15 @@ plt.show()
 ```
 
 - **Accuracy Curves**
-
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/CNN%20RESULTS/Loss%20-%20Accuracy%20-%20CNN.png" alt="CNN-Loss-Accuracy" width="300"/>
+  <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/MLP%20RESULTS/Loss%20-%20Accuracy%20-%20MLP.png" alt="MLP-Loss-Accuracy" width="300"/>
+</div>
 - **Confusion Matrix**: Heatmap showing class-wise predictions vs. true labels
-
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/CNN%20RESULTS/Matrix%20Confusion%20-%20CNN.png?raw=true" alt="CNN-Confusion Matrix" width="300"/>
+  <img src="https://github.com/Hieuvu4438/Python-Assignment-02/blob/main/RESULTS/MLP%20RESULTS/Confusion%20Matrix%20-%20MLP.png?raw=true" alt="MLP-Confusion Matrix" width="300"/>
+</div>
 ## ⚙️ Usage
 
 **Clone the Repository**:
