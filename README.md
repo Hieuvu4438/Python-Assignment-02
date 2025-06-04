@@ -115,14 +115,15 @@ Implemented in `CNN.ipynb` using a simplified GoogLeNet architecture with Incept
 ## 📊 Results
 
 ## So sánh kết quả MLP và CNN
+## Comparison of MLP and CNN Results
 
-| Tiêu chí                | MLP                              | CNN (GoogLeNet)                  |
-|-------------------------|----------------------------------|----------------------------------|
-| **Độ chính xác ban đầu**| ~10% (ngẫu nhiên)               | ~66.7% (ngẫu nhiên)               |
-| **Độ chính xác cuối**   | 55-60%                          | 90-92%                          |
-| **Thời gian huấn luyện**| Nhanh hơn (kiến trúc đơn giản)  | Chậm hơn (Inception phức tạp)   |
-| **Hiệu quả**            | Kém với dữ liệu không gian      | Tốt, bắt đặc trưng không gian   |
-| **Số tham số**          | ~1.8M                           | ~6.2M                           |
+| Criterion               | MLP                              | CNN (GoogLeNet)                  |
+|------------------------|----------------------------------|----------------------------------|
+| **Initial Accuracy**   | ~10% (random)                   | ~10% (random)                   |
+| **Final Accuracy**     | 40-50%                          | 70-80%                          |
+| **Training Time**      | Faster (simpler architecture)   | Slower (complex Inception)      |
+| **Efficiency**         | Poor with spatial data          | Strong, captures spatial features |
+| **Parameters**         | ~1.8M                           | ~6.2M                           |
 ## 📈 Visualizations
 
 Both notebooks include visualizations to analyze model performance:
